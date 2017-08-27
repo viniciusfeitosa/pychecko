@@ -15,6 +15,7 @@ class InvalidRuleError(PyCheckoException):
     This exception will be thrown when the rule sent to
     Pychecko is not a Boolean condition.
     '''
+
     def __init__(self, msgError=None):
         if msgError:
             self.message = msgError
@@ -25,6 +26,7 @@ class InvalidMethodError(PyCheckoException):
     This exception will be thrown when the method sent to
     Pychecko is not a real method.
     '''
+
     def __init__(self, msgError=None):
         if msgError:
             self.message = msgError
@@ -76,7 +78,6 @@ class Pychecko:
         :return: modified instance
         '''
         for method in self.__methods_to_add:
-            print(method)
             setattr(
                 self.__instance,
                 method.__name__,

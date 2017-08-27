@@ -1,4 +1,4 @@
-# PyChecko  [![Build Status](https://travis-ci.org/viniciusfeitosa/PyChecko.svg?branch=master)](https://travis-ci.org/viniciusfeitosa/PyChecko)
+# PyChecko  [![Build Status](https://travis-ci.org/viniciusfeitosa/pychecko.svg?branch=master)](https://travis-ci.org/viniciusfeitosa/pychecko)
 
 The PyChecko is a MicroFramework to compose a instance in execution time by rules predefined.
 

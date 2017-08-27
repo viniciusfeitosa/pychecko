@@ -44,15 +44,15 @@ def bar(self):
 
 # Class A definition
 class A:
-    def __init__(self, fist_name, last_name):
+    def __init__(self, first_name, last_name):
         # There are just two attributes
-        self.fist_name = fist_name
+        self.first_name = first_name
         self.last_name = last_name
 
     # And just the method foo
     def foo(self):
-        print('{fist_name} {last_name}: {email}'.format(
-            fist_name=self.fist_name,
+        print('{first_name} {last_name}: {email}'.format(
+            first_name=self.first_name,
             last_name=self.last_name,
             email=self.email)) # There is a attribute that is defined just in the bar
 
@@ -66,11 +66,11 @@ if __name__ == '__main__':
     # Add the methods that you want apply
     pycheck.add(
         bar,
-        [a.fist_name == 'FirstName', a.last_name == 'LastName'] # Two bool conditions
+        [a.first_name == 'FirstName', a.last_name == 'LastName'] # Two bool conditions
     )
     pycheck.add(
         lib.bar,
-        [a.fist_name != 'FirstName' or a.last_name != 'LastName'] # One bool condition
+        [a.first_name != 'FirstName' or a.last_name != 'LastName'] # One bool condition
     )
 
     # running PyChecko and get the modified instance

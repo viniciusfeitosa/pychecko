@@ -1,4 +1,4 @@
-from pychecko import Pychecko
+from pychecko.pychecko import Pychecko
 from tests import fix_module
 
 

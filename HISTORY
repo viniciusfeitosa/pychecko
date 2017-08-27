@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.1
+-----
+- Removed inconsistent code
+
 1.0.0
 -----
 - First PyChecko version

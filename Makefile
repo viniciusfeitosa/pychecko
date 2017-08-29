@@ -12,7 +12,7 @@ flasgger_package:
 
 .PHONY: test
 test: pep8 pychecko_package
-	@py.test tests 
+	@py.test tests -s -vv --cov --cov-config=.coveragerc --doctest-modules pychecko
 
 .PHONY: sdist
 sdist: test

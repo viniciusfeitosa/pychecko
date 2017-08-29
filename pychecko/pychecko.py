@@ -32,10 +32,44 @@ class InvalidMethodError(PyCheckoException):
             self.message = msgError
 
 
+class InvalidSignatureInputTypeError(PyCheckoException):
+    '''
+    This exception will be thrown when the signature has not
+    completely attended by the methods passed to PyChecko
+    '''
+
+    def __init__(self, msgError=None):
+        if msgError:
+            self.message = msgError
+
+
+class InvalidSignatureClassError(PyCheckoException):
+    '''
+    This exception will be thrown when the signature has not
+    completely attended by the methods passed to PyChecko
+    '''
+
+    def __init__(self, msgError=None):
+        if msgError:
+            self.message = msgError
+
+
 class Pychecko:
-    def __init__(self, instance):
+    def __init__(self, instance, signature=None):
         self.__methods_to_add = list()
         self.__instance = instance
+        if (
+            signature and
+            (
+                not isinstance(signature, (tuple, list)) or
+                not all(isinstance(s, str) for s in signature)
+            )
+        ):
+            raise InvalidSignatureInputTypeError(
+                "Type is: {}. The type should be tuple or list"
+                .format(type(signature))
+            )
+        self.__signature = signature
 
     def add(self, method, rules=[]):
         '''
@@ -70,6 +104,10 @@ class Pychecko:
                 )
 
     @property
+    def class_signature(self):
+        return self.__instance
+
+    @property
     def execute(self):
         '''
         Property responsible to apply all method that the rules match
@@ -83,4 +121,10 @@ class Pychecko:
                 method.__name__,
                 types.MethodType(method, self.__instance),
             )
+
+        if (
+            self.__signature and not
+            set(self.__signature).issubset(self.__instance.__dict__)
+        ):
+            raise InvalidSignatureClassError()
         return self.__instance

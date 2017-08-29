@@ -1,0 +1,5 @@
+coveralls
+flake8
+pep8
+pytest
+pytest-cov

@@ -6,7 +6,7 @@ except ImportError:
 
 setup(
     name='PyChecko',
-    version='1.0.1',
+    version='1.1.0',
     url='https://github.com/viniciusfeitosa/pychecko/',
     license='MIT',
     author='Vinicius Pacheco',
@@ -14,8 +14,4 @@ setup(
     description='MicroFramework to compose instances in execution time',
     zip_safe=False,
     platforms='any',
-    install_requires=[
-        'tox',
-        'pytest',
-    ]
 )

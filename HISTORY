@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.1.0
+-----
+- Added Class signature validation
+- Removed unnecessary requirements
+- Add test-coverage 
+
 1.0.1
 -----
 - Removed inconsistent code

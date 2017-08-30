@@ -80,7 +80,41 @@ if __name__ == '__main__':
     a.foo() # The result will be: FirstName LastName: 'bar@email.com'
 ```
 
+## Applying instance validation
+
+Another possible option is validade the instance integrity.
+
+```python
+# app.py
+
+'''
+create a list with the name methods that must be
+in the instance after execute the Pychecko
+'''
+instance_signature [
+    'method_a',
+    'method_b',
+    'method_c',
+]
+
+# In the Pychecko declaration, send the list in the option paramether
+a = A('value1', 'value2')
+pycheck = Pychecko(a, signature=instance_signature)
+# ...
+
+'''
+ At final, if all methods name that you sent in the list
+ to Pychecko are in the instance, the instace will be returned
+ using the execute property .
+
+ If the instance does't respect the signature will the throw the 
+ Exception InvalidSignatureClassError
+ '''
+ a = pycheck.execute
+
+ # ...
+```
+
 # Next Features
 
 * Create the bulk add
-* Create the validation to signature class

@@ -103,16 +103,16 @@ pycheck = Pychecko(a, signature=instance_signature)
 # ...
 
 '''
- At final, if all methods name that you sent in the list
- to Pychecko are in the instance, the instace will be returned
- using the execute property .
+At final, if all methods that you sent in the list
+to Pychecko are in the instance will be returned
+using the `execute` property.
 
- If the instance does't respect the signature will the throw the 
- Exception InvalidSignatureClassError
- '''
- a = pycheck.execute
+If the instance does't respect the signature will the thrown the 
+Exception InvalidSignatureClassError
+'''
+a = pycheck.execute
 
- # ...
+# ...
 ```
 
 # Next Features

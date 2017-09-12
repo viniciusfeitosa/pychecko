@@ -7,7 +7,7 @@ except ImportError:
 setup(
     name='PyChecko',
     packages=find_packages(),
-    version='1.1.0',
+    version='1.1.1',
     url='https://github.com/viniciusfeitosa/pychecko/',
     license='MIT',
     author='Vinicius Pacheco',

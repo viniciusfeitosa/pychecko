@@ -1,11 +1,12 @@
 try:
-    from setuptools import setup
+    from setuptools import setup, find_packages
 except ImportError:
     from distutils.core import setup
 
 
 setup(
     name='PyChecko',
+    packages=find_packages(),
     version='1.1.0',
     url='https://github.com/viniciusfeitosa/pychecko/',
     license='MIT',

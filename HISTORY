@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.2.0
+-----
+- Added bulk methods insertion
+- Change general importation
+- Update Documentation
+- Added new example
+
 1.1.1
 -----
 - Fix setup.py

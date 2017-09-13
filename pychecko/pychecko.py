@@ -2,6 +2,7 @@
 Pychecko is a microframework to compose
 the methods in an instance in real time.
 '''
+import collections
 import types
 
 
@@ -54,6 +55,17 @@ class InvalidSignatureClassError(PyCheckoException):
             self.message = msgError
 
 
+class InvalidInputError(PyCheckoException):
+    '''
+    This exception will be thrown when the signature has not
+    completely attended by the inputs passed to PyChecko
+    '''
+
+    def __init__(self, msgError=None):
+        if msgError:
+            self.message = msgError
+
+
 class Pychecko:
     def __init__(self, instance, signature=None):
         self.__methods_to_add = list()
@@ -83,7 +95,13 @@ class Pychecko:
         if all(rules):
             self.__methods_to_add.append(method)
 
-    def __inputs_validate(sel, method, rules=[]):
+    def bulk_add(self, methods, rules=[]):
+        self.__validate_iterable(methods)
+
+        for method in methods:
+            self.add(method, rules)
+
+    def __inputs_validate(self, method, rules=[]):
         '''
         Method resposible to validade if the inputs are right to
         apply over the instance.
@@ -95,6 +113,8 @@ class Pychecko:
                 )
             )
 
+        self.__validate_iterable(rules)
+
         for rule in rules:
             if not isinstance(rule, bool):
                 raise InvalidRuleError(
@@ -102,6 +122,10 @@ class Pychecko:
                         rule=rule,
                     )
                 )
+
+    def __validate_iterable(self, iterable):
+        if not isinstance(iterable, collections.Iterable):
+            raise InvalidInputError('The input is not an Iterable')
 
     @property
     def class_signature(self):

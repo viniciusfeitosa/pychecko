@@ -4,7 +4,7 @@ install:
 
 .PHONY: pep8
 pep8:
-	@flake8 pychecko
+	@flake8 pychecko --ignore=F401
 
 .PHONY: pychecko_package
 flasgger_package:

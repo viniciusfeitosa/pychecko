@@ -1,5 +1,6 @@
 import pytest
-from pychecko.pychecko import (
+from pychecko import (
+    InvalidInputError,
     InvalidMethodError,
     InvalidRuleError,
     InvalidSignatureClassError,
@@ -87,6 +88,27 @@ class TestPyChecko(object):
         my_class.fix_method(5)
         assert str(my_class) == '1, 2, 15'
 
+    def test_bulk_addiction(self):
+        my_class = FixClass(1, 2)
+        assert 'fix_method' not in my_class.__dict__
+        assert 'fix_method_b' not in my_class.__dict__
+
+        p = Pychecko(my_class)
+        p.bulk_add(
+            [
+                fix_module.fix_method,
+                fix_module.fix_method_b,
+            ],
+            [True]
+        )
+        my_class = p.execute
+        assert 'fix_method' in my_class.__dict__
+        assert 'fix_method_b' in my_class.__dict__
+        my_class.fix_method(3)
+        my_class.fix_method_b(4)
+        assert str(my_class) == '1, 2, 13'
+        assert my_class.d == 24
+
     def test_composition_with_signature(self):
         test_cases = [('fix_method', ), ['fix_method']]
         for test_case in test_cases:
@@ -105,25 +127,31 @@ class TestPyChecko(object):
     def test_exceptions(self):
         test_cases = [
             {
-                'method': 'method',
+                'method': fix_method,
                 'rule': True,
+                'signature': None,
+                'error': InvalidInputError,
+            },
+            {
+                'method': 'method',
+                'rule': [True],
                 'signature': None,
                 'error': InvalidMethodError,
             },
             {
                 'method': fix_method,
-                'rule': 'rule',
+                'rule': ['rule'],
                 'signature': None,
                 'error': InvalidRuleError},
             {
                 'method': fix_method,
-                'rule': True,
+                'rule': [True],
                 'signature': ['fix_method', 'method'],
                 'error': InvalidSignatureClassError,
             },
             {
                 'method': fix_method,
-                'rule': True,
+                'rule': [True],
                 'signature': 'fix_method',
                 'error': InvalidSignatureInputTypeError,
             },
@@ -133,5 +161,5 @@ class TestPyChecko(object):
             with pytest.raises(test_case['error']):
                 my_class = FixClass(1, 2)
                 p = Pychecko(my_class, test_case['signature'])
-                p.add(test_case['method'], [test_case['rule']])
+                p.add(test_case['method'], test_case['rule'])
                 my_class = p.execute

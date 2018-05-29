@@ -430,4 +430,6 @@ PyChecko.egg-info
 lastfailed
 .tox*
 
+.pytest_cache
+
 # End of https://www.gitignore.io/api/vim,venv,emacs,virtualenv,sublimetext,visualstudio,visualstudiocode

@@ -7,7 +7,7 @@ pep8:
 	@flake8 pychecko --ignore=F401
 
 .PHONY: pychecko_package
-flasgger_package:
+pychecko_package:
 	@cd etc/pycheco_package; python setup.py install
 
 .PHONY: test

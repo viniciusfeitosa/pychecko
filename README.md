@@ -130,8 +130,82 @@ if __name__ == '__main__':
 
     a.bar()
     a.foo()  # The result is: FirstName LastName: 'bar@email.com'
+```
+
+## Pychecko Using Classes
+
+```python
+from pychecko import PycheckoComponent
+
+# Creating a pycheko component
+class MyComponentA(PycheckoComponent):
+
+    # is_applied is required for the PychecoComponents
+    # It's responsible to identify if all class methods
+    # should be applied in an instance
+    def is_applied(self):
+        return True
+
+    def bar(self):
+        self.email = 'john.doe@email.com'
+
+
+class MyComponentB(PycheckoComponent):
+
+    def is_applied(self):
+        return True
+
+    def name_changer(self):
+        self.first_name = 'john doe'
+```
+
+```python
+# app.py
+import lib  # inside lib has a method bar with the attribute email definition
+from pychecko import PycheckoClassModifier
+
+
+# There is another method bar with a different
+# definition to the attribute email
+def bar(self):
+    self.email = 'bar@email.com'
+
+
+# Class A definition
+class A:
+    def __init__(self, first_name, last_name):
+        # There are just two attributes
+        self.first_name = first_name
+        self.last_name = last_name
+
+    # And just the method foo
+    def foo(self):
+        print('{first_name} {last_name}: {email}'.format(
+            first_name=self.first_name,
+            last_name=self.last_name,
+            email=self.email))  # attribute that is defined just in the bar
+
+
+# the main logic
+if __name__ == '__main__':
+    # Instantiate the class A
+    instance = A('FirstName', 'LastName')
+    # pass the instance variable to PyCheckoClassModifier
+    # whit the classes that should be applied
+    pycheck = PycheckoClassModifier(instance, [
+        lib.MyComponentA(),  # This implements bar()
+        lib.MyComponentB(),  # This implements name_changer()
+    ])
+
+    # running PyChecko and get the modified instance
+    a = pycheck.execute
+
+    a.bar()
+    a.name_changer()
+    a.foo()  # The result is: John Doe LastName: 'bar@email.com'
 
 ```
+
 ## Applying instance validation
 
 Another possible option is validate the instance integrity.

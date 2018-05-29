@@ -6,6 +6,7 @@ from pychecko import (
     InvalidSignatureClassError,
     InvalidSignatureInputTypeError,
     Pychecko,
+    PycheckoClassModifier
 )
 from tests import fix_module
 
@@ -26,6 +27,73 @@ class FixClass(object):
 
 
 class TestPyChecko(object):
+
+    def test_simple_class_composition(self):
+        my_class = FixClass(1, 2)
+        assert 'fix_method' not in my_class.__dict__
+
+        p = PycheckoClassModifier(
+            my_class, [
+                fix_module.MyFixComponentA(),
+            ])
+
+        my_class = p.execute
+        assert 'fix_method' in my_class.__dict__
+        my_class.fix_method(3)
+        my_class.fix_method_b(3)
+        assert str(my_class) == '1, 28, 18'
+
+    def test_multiple_class_composition(self):
+        my_class = FixClass(1, 2)
+        assert 'fix_method' not in my_class.__dict__
+
+        p = PycheckoClassModifier(
+            my_class, [
+                fix_module.MyFixComponentA(),
+                fix_module.MyFixComponentB(),
+            ])
+
+        my_class = p.execute
+        assert 'fix_method' in my_class.__dict__
+        assert 'fix_method_b' in my_class.__dict__
+        my_class.fix_method(3)
+        my_class.fix_method_b(3)
+        assert str(my_class) == '1, 33, 18'
+
+    def test_sorting_multiple_class_composition(self):
+        my_class = FixClass(1, 2)
+        assert 'fix_method' not in my_class.__dict__
+
+        p = PycheckoClassModifier(
+            my_class, [
+                fix_module.MyFixComponentB(),
+                fix_module.MyFixComponentA(),
+            ])
+
+        my_class = p.execute
+        assert 'fix_method' in my_class.__dict__
+        assert 'fix_method_b' in my_class.__dict__
+        my_class.fix_method(3)
+        my_class.fix_method_b(3)
+        assert str(my_class) == '1, 28, 18'
+
+    def test_false_multiple_class_composition(self):
+        my_class = FixClass(1, 2)
+        assert 'fix_method' not in my_class.__dict__
+
+        p = PycheckoClassModifier(
+            my_class, [
+                fix_module.MyFixComponentA(),
+                fix_module.MyFixComponentB(),
+                fix_module.MyFixComponentFalse(),
+            ])
+
+        my_class = p.execute
+        assert 'fix_method' in my_class.__dict__
+        assert 'fix_method_b' in my_class.__dict__
+        my_class.fix_method(3)
+        my_class.fix_method_b(3)
+        assert str(my_class) == '1, 33, 18'
 
     def test_composition_without_condition(self):
         my_class = FixClass(1, 2)
